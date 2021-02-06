@@ -1,3 +1,5 @@
+const audioContext = new AudioContext()
+
 const NOTE_DETAILS = [
     {note: "C", key: "Z", frequency: 261.626, active: false},
     {note: "Db", key: "S", frequency: 277.183, active: false},
@@ -12,6 +14,10 @@ const NOTE_DETAILS = [
     {note: "Bb", key: "J", frequency: 466.164, active: false},
     {note: "B", key: "M", frequency: 493.883, active: false}
 ]
+
+const test = 'applied text'
+test.newvalue = 'ballad'
+console.log(test.newvalue)
 
 document.addEventListener('keydown', e =>
 {
@@ -43,12 +49,37 @@ function getNoteDetail(keyboardKey)
     return (NOTE_DETAILS.find(n => `Key${n.key}` === keyboardKey))
 }
 
+
 function playNotes()
 {
     NOTE_DETAILS.forEach(n =>
     {
+        //change color of pressed key
         const keyElement = document.querySelector(`[data-note="${n.note}"]`)
         console.log(n)
-        keyElement.classList.toggle("active", n.active || false)
+        keyElement.classList.toggle("active", n.active)
+
+
+        if (n.oscillator != null)
+        {
+            n.oscillator.disconnect()
+        }
     })
+
+    const activeNotes = NOTE_DETAILS.filter(n => n.active)
+    const gain = 1/activeNotes
+    activeNotes.forEach(n =>
+    {
+        startNote(n)
+    })
+}
+
+function startNote(noteDetail)
+{
+    const oscillator = audioContext.createOscillator()
+    oscillator.frequency = noteDetail.frequency
+    oscillator.type = 'sine'
+    oscillator.connect(audioContext.destination)
+    oscillator.start()
+    noteDetail.oscillator = oscillator
 }
