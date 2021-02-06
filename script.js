@@ -15,8 +15,6 @@ const NOTE_DETAILS = [
     {note: "B", key: "M", frequency: 493.883, active: false}
 ]
 
-const test = 'applied text'
-test.newvalue = 'ballad'
 console.log(test.newvalue)
 
 document.addEventListener('keydown', e =>
