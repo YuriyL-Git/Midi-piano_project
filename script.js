@@ -15,7 +15,6 @@ const NOTE_DETAILS = [
     {note: "B", key: "M", frequency: 493.883, active: false}
 ]
 
-console.log(test.newvalue)
 
 document.addEventListener('keydown', e =>
 {
@@ -24,7 +23,8 @@ document.addEventListener('keydown', e =>
     const keyboardKey = e.code
     const noteDetail = getNoteDetail(keyboardKey)
 
-    if (noteDetail == null) return
+    if (noteDetail == null) return //comment here
+
     console.log(noteDetail)
     noteDetail.active = true
     playNotes()
